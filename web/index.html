@@ -8,15 +8,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Moderustic:wght@300..800&family=Pacifico&display=swap" rel="stylesheet">
+    <script src="scripts/main.js" defer></script>
 </head>
 <body>
     <h1> My Cooking Week</h1>
     <div>
         <h2>Add a new recipe:</h2>
-        <form>
+        <form id="recipe-form">
             <input id="recipe-box" type="text" placeholder="Recipe name" />
-            <input type="submit" value="Add"/>
+            <input id= "recipe-submit" type="submit" value="Add"/>
         </form>
+    </div>
+    <div id="recipes">
     </div>
 </body>
 </html>
