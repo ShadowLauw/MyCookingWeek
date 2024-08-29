@@ -5,11 +5,15 @@ recipeForm.addEventListener("submit", e => {
 });
 
 function addRecipe() {
-    const newRecipe = document.createElement("div");
-    const recipeTitle = document.createElement("p");
-    recipeTitle.textContent = document.getElementById("recipe-box").value;
-    newRecipe.id = "recipe";
-    newRecipe.appendChild(recipeTitle);
-    document.getElementById("recipes").appendChild(newRecipe);
+    const title = document.getElementById("recipe-box").value;
+    if (title) {
+        const newRecipe = document.createElement("div");
+        const recipeTitle = document.createElement("p");
+        recipeTitle.textContent = title;
+        newRecipe.id = "recipe";
+        newRecipe.appendChild(recipeTitle);
+        const recipes = document.getElementById("recipes");
+        recipes.insertBefore(newRecipe, recipes.firstChild);
+    }
     recipeForm.reset();
 }

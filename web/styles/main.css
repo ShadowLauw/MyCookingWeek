@@ -3,8 +3,9 @@ html {
 }
 
 body {
-    text-align: center;
-    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 h1 {
@@ -14,6 +15,7 @@ h1 {
     font-style: normal;
     color: #7DC2A5;
     text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    text-align: center;
 }
 
 h2 {
@@ -42,9 +44,18 @@ h2 {
 
 #recipe {
     border: none;
-    border-radius: 25px;
+    border-radius: 30px;
     outline: 2px solid black;
-    width: 500px;
-    height: 50px;
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+    padding: 0 25rem;
+}
+
+#recipe > p {
+    font-family: "Moderustic", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 20px;
 }
