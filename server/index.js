@@ -19,4 +19,11 @@ app.post('/addRecipe', function (req, res) {
     insertData.run(req.body.name, req.body.instructions);
 })
 
+app.post('/delRecipe', function(req, res) {
+    const delData = db.prepare("DELETE FROM recipes WHERE name=(?)");
+    delData.run(req.body.name);
+
+    res.send();
+})
+
 app.listen(3000);
