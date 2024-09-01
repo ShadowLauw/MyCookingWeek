@@ -4,8 +4,8 @@ recipeForm.addEventListener("submit", e => {
     addRecipe();
 });
 
-function addRecipe() {
-    const title = document.getElementById("recipe-box").value;
+function addRecipe(name) {
+    const title = name || document.getElementById("recipe-box").value;
     if (title) {
         const newRecipe = document.createElement("div");
         const recipeTitle = document.createElement("p");
@@ -14,6 +14,26 @@ function addRecipe() {
         newRecipe.appendChild(recipeTitle);
         const recipes = document.getElementById("recipes");
         recipes.insertBefore(newRecipe, recipes.firstChild);
+        if (!name)
+            addRecipeToDatabase(title);
     }
     recipeForm.reset();
 }
+
+async function addRecipeToDatabase(name) {
+    const res = await fetch("http://localhost:3000/addRecipe", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({"name": name, "instructions":""})
+    });
+}
+
+async function loadRecipes() {
+    const res = await fetch("http://localhost:3000/");
+    const recipes = await res.json();
+    recipes.forEach(r => addRecipe(r.name));
+}
+
+loadRecipes();
