@@ -4,7 +4,7 @@ recipeForm.addEventListener("submit", e => {
     addRecipe();
 });
 
-function addRecipe(name) {
+function addRecipe(name, id) {
     const title = name || document.getElementById("recipe-box").value;
     if (title) {
         const newRecipe = document.createElement("div");
@@ -15,8 +15,10 @@ function addRecipe(name) {
         const recipes = document.getElementById("recipes");
         recipes.insertBefore(newRecipe, recipes.firstChild);
         newRecipe.appendChild(createDeleteButton());
+        if (id)
+            recipeTitle.setAttribute('data-id', id);
         if (!name)
-            addRecipeToDatabase(title);
+            addRecipeToDatabase(recipeTitle);
     }
     recipeForm.reset();
 }
@@ -33,20 +35,22 @@ function createDeleteButton() {
     return button;
 }
 
-async function addRecipeToDatabase(name) {
-    await fetch("http://localhost:3000/addRecipe", {
+function addRecipeToDatabase(recipe) {
+    fetch("http://localhost:3000/addRecipe", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({"name": name, "instructions":""})
-    });
+        body: JSON.stringify({"name": recipe.innerText, "instructions":""})
+    })
+    .then(r => r.json())
+    .then((res) => recipe.setAttribute('data-id', res.id));
 }
 
 async function loadRecipes() {
     const res = await fetch("http://localhost:3000/");
     const recipes = await res.json();
-    recipes.forEach(r => addRecipe(r.name));
+    recipes.forEach(r => addRecipe(r.name, r.id));
 }
 
 function delRecipeFromDB(button) {
@@ -55,7 +59,7 @@ function delRecipeFromDB(button) {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({"name": button.previousSibling.innerText})
+        body: JSON.stringify({"id": button.previousSibling.getAttribute('data-id')})
     }).then(() =>  button.parentNode.remove());
 }
 

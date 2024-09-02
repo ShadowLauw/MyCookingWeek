@@ -16,12 +16,13 @@ app.get('/', function (req, res) {
 
 app.post('/addRecipe', function (req, res) {
     const insertData = db.prepare("INSERT INTO recipes (name, instructions) VALUES (?, ?)");
-    insertData.run(req.body.name, req.body.instructions);
+    const a = insertData.run(req.body.name, req.body.instructions);
+    return res.json({"id": String(a.lastInsertRowid)});
 })
 
 app.post('/delRecipe', function(req, res) {
-    const delData = db.prepare("DELETE FROM recipes WHERE name=(?)");
-    delData.run(req.body.name);
+    const delData = db.prepare("DELETE FROM recipes WHERE id=(?)");
+    delData.run(parseInt(req.body.id));
 
     res.send();
 })
